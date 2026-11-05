@@ -1,0 +1,145 @@
+{
+ "E1_dictionary_attack_on_leaked_store": {
+  "wordlist": 500,
+  "plaintext_found": true,
+  "plaintext_seconds": 2.9e-05,
+  "pbkdf2_guesses_until_found": 60,
+  "pbkdf2_seconds": 12.86,
+  "pbkdf2_seconds_per_guess": 0.2179,
+  "slowdown_per_guess_vs_sha256": 78376
+ },
+ "E2_online_bruteforce_1000_guesses_1s_apart": {
+  "insecure_guess_number_that_succeeds": 600,
+  "secure_guesses_evaluated": 8,
+  "secure_guesses_rejected_by_lockout": 992,
+  "lockout_policy": "3 failures -> 300 s lock"
+ },
+ "E3_access_matrix": {
+  "requests": 30,
+  "allowed": 14,
+  "denied": 16,
+  "insecure_baseline_allowed": 30,
+  "table": {
+   "alice|report.txt|read": "ALLOW",
+   "alice|report.txt|write": "ALLOW",
+   "alice|secret.txt|read": "DENY",
+   "alice|secret.txt|write": "ALLOW",
+   "alice|private.txt|read": "ALLOW",
+   "alice|private.txt|write": "ALLOW",
+   "bob|report.txt|read": "ALLOW",
+   "bob|report.txt|write": "DENY",
+   "bob|secret.txt|read": "DENY",
+   "bob|secret.txt|write": "DENY",
+   "bob|private.txt|read": "DENY",
+   "bob|private.txt|write": "DENY",
+   "eve|report.txt|read": "DENY",
+   "eve|report.txt|write": "DENY",
+   "eve|secret.txt|read": "DENY",
+   "eve|secret.txt|write": "DENY",
+   "eve|private.txt|read": "DENY",
+   "eve|private.txt|write": "DENY",
+   "carol|report.txt|read": "ALLOW",
+   "carol|report.txt|write": "DENY",
+   "carol|secret.txt|read": "ALLOW",
+   "carol|secret.txt|write": "DENY",
+   "carol|private.txt|read": "DENY",
+   "carol|private.txt|write": "DENY",
+   "root|report.txt|read": "ALLOW",
+   "root|report.txt|write": "ALLOW",
+   "root|secret.txt|read": "ALLOW",
+   "root|secret.txt|write": "ALLOW",
+   "root|private.txt|read": "ALLOW",
+   "root|private.txt|write": "ALLOW"
+  }
+ },
+ "E4_path_traversal": {
+  "payloads": 8,
+  "naive_escapes": 5,
+  "secure_blocked": 6,
+  "detail": [
+   {
+    "payload": "../etc/passwd",
+    "naive_resolves_to": "/etc/passwd",
+    "naive_escapes_root": true,
+    "secure_blocked": true
+   },
+   {
+    "payload": "../../etc/shadow",
+    "naive_resolves_to": "/etc/shadow",
+    "naive_escapes_root": true,
+    "secure_blocked": true
+   },
+   {
+    "payload": "docs/../../secret",
+    "naive_resolves_to": "/secret",
+    "naive_escapes_root": true,
+    "secure_blocked": true
+   },
+   {
+    "payload": "/../../root/.ssh/id_rsa",
+    "naive_resolves_to": "/root/.ssh/id_rsa",
+    "naive_escapes_root": true,
+    "secure_blocked": true
+   },
+   {
+    "payload": "a/./../../b",
+    "naive_resolves_to": "/b",
+    "naive_escapes_root": true,
+    "secure_blocked": true
+   },
+   {
+    "payload": "ok/file.txt",
+    "naive_resolves_to": "/vault/ok/file.txt",
+    "naive_escapes_root": false,
+    "secure_blocked": false
+   },
+   {
+    "payload": "docs/report.txt",
+    "naive_resolves_to": "/vault/docs/report.txt",
+    "naive_escapes_root": false,
+    "secure_blocked": false
+   },
+   {
+    "payload": "a\\x00.txt",
+    "naive_resolves_to": "/vault/a\u0000.txt",
+    "naive_escapes_root": false,
+    "secure_blocked": true
+   }
+  ]
+ },
+ "E5_encryption": {
+  "bitflip_trials": 1000,
+  "detected": 1000,
+  "sizes": {
+   "1024": {
+    "overhead_bytes": 48,
+    "encrypt_ms": 97.7,
+    "decrypt_ms": 80.0
+   },
+   "102400": {
+    "overhead_bytes": 48,
+    "encrypt_ms": 89.4,
+    "decrypt_ms": 88.5
+   },
+   "1048576": {
+    "overhead_bytes": 48,
+    "encrypt_ms": 89.6,
+    "decrypt_ms": 96.6
+   }
+  },
+  "same_plaintext_twice_identical_ciphertext": false
+ },
+ "E6_audit_log": {
+  "entries": 100,
+  "untouched_valid": true,
+  "single_entry_edits": 100,
+  "detected": 100
+ },
+ "E7_pbkdf2_cost_ms": {
+  "1000": 0.9,
+  "10000": 11.5,
+  "100000": 99.2,
+  "200000": 125.5,
+  "600000": 387.0
+ }
+}
